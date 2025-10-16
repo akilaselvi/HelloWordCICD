@@ -49,6 +49,24 @@ jobs:
           name: unit_test_report
           path: app/build/reports/tests/testDebugUnitTest/
           if-no-files-found: warn
+  instrumentation-test:
+    needs: [unit-test]
+    runs-on: macos-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Run espresso Test
+        uses: reactivecircus/android-espresso@v1
+        with:
+          api-level: 33
+          script: ./gradlew connectedCheck
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: instrumentation_test_report
+          path: app/build/reports/androidTests/connected/
+          if-no-files-found: warn
+
 #      # Runs a single command using the runners shell
 #      - name: Run a one-line script
 #        run: echo Hello, world!
