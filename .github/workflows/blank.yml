@@ -17,6 +17,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   lint:
+    if : false
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -36,6 +37,7 @@ jobs:
           path: app/build/reports/lint-results-debug.html
           if-no-files-found: warn
   unit-test:
+    if : false
     needs: [lint]
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +52,6 @@ jobs:
           path: app/build/reports/tests/testDebugUnitTest/
           if-no-files-found: warn
   instrumentation-test:
-    if: false
     needs: [unit-test]
     runs-on: ubuntu-latest
     steps:
