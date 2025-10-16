@@ -52,7 +52,7 @@ jobs:
           path: app/build/reports/tests/testDebugUnitTest/
           if-no-files-found: warn
   instrumentation-test:
-    needs: [unit-test]
+#    needs: [unit-test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
