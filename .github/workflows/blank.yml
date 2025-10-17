@@ -75,6 +75,8 @@ jobs:
           profile: pixel_8_API_35
           disable-animations: true
           script: ./gradlew connectedDebugAndroidTest
+      - name: Terminate Emulator (ignore if not running)
+        run: adb -s emulator-5554 emu kill || true
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
