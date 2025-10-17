@@ -65,6 +65,11 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+      - name: Create and start emulator
+        run: |
+            echo "no" | avdmanager create avd -n test -k "system-images;android-35;google_apis;x86_64" --device "pixel_8"
+            emulator -avd test -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim &
+            adb wait-for-device shell getprop sys.boot_completed
 
       - name: Run espresso Test
         uses: reactivecircus/android-emulator-runner@v2
@@ -75,8 +80,6 @@ jobs:
           profile: pixel_8_API_35
           disable-animations: true
           script: ./gradlew connectedDebugAndroidTest
-      - name: Terminate Emulator (ignore if not running)
-        run: adb -s emulator-5554 emu kill || true
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
