@@ -69,10 +69,10 @@ jobs:
       - name: Run espresso Test
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
-          target: google_apis
+          api-level: 35
+          target: google_apis_playstore
           arch: x86_64
-          profile: pixel_8_API_35
+          profile: pixel_8
           disable-animations: true
           script: ./gradlew connectedDebugAndroidTest
       - name: Upload test report
