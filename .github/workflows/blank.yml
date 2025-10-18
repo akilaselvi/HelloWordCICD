@@ -65,9 +65,9 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
-      - name: Install system image
+      - name: Install ARM64 system image
         run: |
-          sdkmanager --install "system-images;android-35;google_apis;x86_64"
+          sdkmanager --install "system-images;android-35;google_apis;arm64-v8a"
 
       - name: Create and start emulator
         run: |
