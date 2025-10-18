@@ -71,7 +71,7 @@ jobs:
 
       - name: Create and start emulator
         run: |
-          echo "no" | avdmanager create avd -n test -k "system-images;android-35;google_apis;x86_64" --device "pixel_8"
+          echo "no" | avdmanager create avd -n test -k "system-images;android-35;google_apis;arm64-v8a" --device "pixel_8"
           emulator -avd test -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim &
           adb wait-for-device shell getprop sys.boot_completed
 
@@ -80,7 +80,7 @@ jobs:
         with:
           api-level: 35
           target: google_apis_playstore
-          arch: x86_64
+          arch: arm64-v8a
           profile: pixel_8
           disable-animations: true
           script: ./gradlew connectedDebugAndroidTest
