@@ -73,8 +73,11 @@ jobs:
       - name: Create and start emulator
         run: |
           echo "no" | avdmanager create avd -n test -k "system-images;android-35;google_apis;arm64-v8a"
-          emulator -avd test -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim &
-          adb wait-for-device shell getprop sys.boot_completed  
+          $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim &
+          adb wait-for-device shell getprop sys.boot_completed
+#          echo "no" | avdmanager create avd -n test -k "system-images;android-35;google_apis;arm64-v8a"
+#          emulator -avd test -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim &
+#          adb wait-for-device shell getprop sys.boot_completed
 
 #      - name: Install SDK components
 #        run: |
