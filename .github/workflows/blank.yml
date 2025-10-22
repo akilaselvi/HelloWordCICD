@@ -66,6 +66,22 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install emulator and system image
+        run: |
+          sdkmanager --install "emulator"
+          sdkmanager --install "system-images;android-35;google_apis;arm64-v8a"
+
+      - name: Create and start emulator
+        run: |
+          echo "no" | avdmanager create avd -n test -k "system-images;android-35;google_apis;arm64-v8a"
+          adb kill-server || true
+          pkill -f "emulator" || true
+          $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect \
+            -no-audio -no-boot-anim -no-snapshot -camera-back none -camera-front none -wipe-data &
+          adb wait-for-device
+          adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+          adb shell input keyevent 82  
+
 #      - name: Install ARM64 system image
 #        run: |
 #          sdkmanager --install "system-images;android-35;google_apis;arm64-v8a"
@@ -97,8 +113,8 @@ jobs:
 #          adb wait-for-device
 #          adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 
-      - name: Check available devices
-        run: avdmanager list devices
+#      - name: Check available devices
+#        run: avdmanager list devices
 
 #      - name: Install ARM64 system image
 #        run: |
